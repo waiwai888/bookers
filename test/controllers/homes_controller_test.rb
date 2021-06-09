@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class BookerTest < ActiveSupport::TestCase
+class HomesControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
