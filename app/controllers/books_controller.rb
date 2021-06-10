@@ -7,9 +7,15 @@ class BooksController < ApplicationController
 
   def create
     book = Book.new(book_params)
-    book.save
-    redirect_to book_path(book.id)
+    if book.save
+      flash[:notice] = "successfully"
+      redirect_to book_path(book.id)
+    else
+      flash.now[:danger] = 'ユーザの登録に失敗しました。'
+      render :new
+    end
   end
+
   
 private
   def book_params
