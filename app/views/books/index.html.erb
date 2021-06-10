@@ -1,4 +1,14 @@
-<p id="notice"></p>
+<% if flash[:notice] %>
+<p id="notice">
+ <%= flash[:notice] %>
+</p>
+<% end %>
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>件のエラーが発生しました
+  <% @book.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+<% end %>
 <h1>Books</h1>
 <table>
     <thead>
@@ -28,4 +38,4 @@
     <%= f.submit 'Create Book' %>
 <% end %>
 
-<%= link_to "Back", root_path %> 
+<%= link_to "Back", top_path %> 

@@ -5,14 +5,14 @@ class BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(book_params)
-    if book.save
-      flash[:success] = "success"
-      redirect_to book_path(book.id)
+    @book = Book.new(book_params)
+    @books = Book.all
+    if @book.save
+      flash[:success] = "successfully"
+      redirect_to book_path(@book.id)
     else
-      flash.now[:danger] = "faild"
-      redirect_to book_path(book.id)
-      render :show
+      flash[:success] = "error"
+      render :index
     end
   end
   
@@ -25,27 +25,21 @@ class BooksController < ApplicationController
   end
   
   def update
-    book = Book.find(params[:id])
-    if book.update(book_params)
-      flash[:success] = "success"
-      redirect_to book_path(book.id)
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      flash[:success] = "successfully"
+      redirect_to book_path(@book.id)
     else
-      flash.now[:danger] = "faild"
-      redirect_to book_path(book.id)
-      render :show
+      flash[:success] = "error"
+      render :edit
     end
   end
   
   def destroy
     book = Book.find(params[:id])
-    if book.destroy
-      flash[:success] = "success"
-      redirect_to book_path(book.id)
-    else
-      flash.now[:danger] = "faild"
-      redirect_to book_path(book.id)
-      render :show
-    end
+    book.destroy
+    flash[:success] = "successfully"
+    redirect_to books_path
   end
   
 private
