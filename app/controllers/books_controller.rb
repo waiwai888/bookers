@@ -4,18 +4,49 @@ class BooksController < ApplicationController
     @book = Book.new
   end
 
-
   def create
     book = Book.new(book_params)
     if book.save
-      flash[:notice] = "successfully"
+      flash[:success] = "success"
       redirect_to book_path(book.id)
     else
-      flash.now[:danger] = 'ユーザの登録に失敗しました。'
-      render :new
+      flash.now[:danger] = "faild"
+      redirect_to book_path(book.id)
+      render :show
     end
   end
-
+  
+  def show
+    @book = Book.find(params[:id])
+  end
+  
+  def edit
+    @book = Book.find(params[:id])
+  end
+  
+  def update
+    book = Book.find(params[:id])
+    if book.update(book_params)
+      flash[:success] = "success"
+      redirect_to book_path(book.id)
+    else
+      flash.now[:danger] = "faild"
+      redirect_to book_path(book.id)
+      render :show
+    end
+  end
+  
+  def destroy
+    book = Book.find(params[:id])
+    if book.destroy
+      flash[:success] = "success"
+      redirect_to book_path(book.id)
+    else
+      flash.now[:danger] = "faild"
+      redirect_to book_path(book.id)
+      render :show
+    end
+  end
   
 private
   def book_params
